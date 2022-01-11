@@ -8,13 +8,11 @@ createGrid(16);
 
 function createGrid(n){  
   for (let i = 0; i < n; i++) {
-    gridcontainer.appendChild(document.createElement('div'));
-  }
-  gridcontainer.childNodes.forEach(rowcontainer => {
+    let rowcontainer = gridcontainer.appendChild(document.createElement('div'));
     for (let i = 0; i < n; i++) {
       rowcontainer.appendChild(document.createElement('div'));
     }
-  });
+  }
 
   cells = document.querySelectorAll('.gridcontainer > div > div');
   cells.forEach(cell => {
