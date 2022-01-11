@@ -13,22 +13,45 @@ function createGrid(n){
       rowcontainer.appendChild(document.createElement('div'));
     }
   }
+  dwgEventListener('rgb');
+}
 
+function dwgEventListener(colorMode) {
   cells = document.querySelectorAll('.gridcontainer > div > div');
   cells.forEach(cell => {
     cell.addEventListener('mousedown', e => {
-      e.target.style.backgroundColor = 'black';
+      switch (colorMode) {
+        case 'rgb':
+          e.target.style.backgroundColor = randomRGB();
+          break;
+        case 'black':
+          e.target.style.backgroundColor = 'black';
+      }
       isDrawing = true;
     });
     cell.addEventListener('mouseenter', e => {
       if (isDrawing) {
-        e.target.style.backgroundColor = 'black';
+        switch (colorMode) {
+          case 'rgb':
+            e.target.style.backgroundColor = randomRGB();
+            break;
+          case 'black':
+            e.target.style.backgroundColor = 'black';
+        }
       }
     });
   });
   document.addEventListener('mouseup', () => {
     isDrawing = false;
   });
+}
+
+function randomRGB() {
+  return `rgb(${randomNum(256)}, ${randomNum(256)}, ${randomNum(256)})`;
+}
+
+function randomNum(num) { 
+  return Math.floor(Math.random() * num);
 }
 
 gridChangeButton.addEventListener('click', () => {
