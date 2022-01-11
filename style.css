@@ -17,13 +17,9 @@
 
 .gridcontainer > div > div{
   flex: 1;
-  box-sizing: border-box;
   background-color: whitesmoke;
+  box-sizing: border-box;
 }
-
-/* .gridcontainer > div > div:hover {
-  background-color: lightgrey;
-} */
 
 .gridcontainer > div > .blackcell {
   background-color: black;

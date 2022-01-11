@@ -1,30 +1,53 @@
 const gridcontainer = document.querySelector('.gridcontainer');
+const gridChangeButton = document.querySelector('.gridsize')
 let isDrawing = false;
-const n = 30;
 
-for (let i = 0; i < n; i++) {
-  gridcontainer.appendChild(document.createElement('div'));
-}
+createGrid(16);
 
-gridcontainer.childNodes.forEach(rowcontainer => {
+function createGrid(n){  
   for (let i = 0; i < n; i++) {
-    rowcontainer.appendChild(document.createElement('div'));
+    gridcontainer.appendChild(document.createElement('div'));
   }
-});
-
-const cells = document.querySelectorAll('.gridcontainer > div > div');
-cells.forEach(cell => {
-  cell.addEventListener('mousedown', e => {
-    e.target.style.backgroundColor = 'black';
-    isDrawing = true;
-  });
-  cell.addEventListener('mouseenter', e => {
-    if (isDrawing) {
-      e.target.style.backgroundColor = 'black';
+  gridcontainer.childNodes.forEach(rowcontainer => {
+    for (let i = 0; i < n; i++) {
+      rowcontainer.appendChild(document.createElement('div'));
     }
   });
-});
 
-document.addEventListener('mouseup', () => {
-  isDrawing = false;
+  const cells = document.querySelectorAll('.gridcontainer > div > div');
+  cells.forEach(cell => {
+    cell.addEventListener('mousedown', e => {
+      e.target.style.backgroundColor = 'black';
+      isDrawing = true;
+    });
+    
+    cell.addEventListener('mouseenter', e => {
+      if (isDrawing) {
+        e.target.style.backgroundColor = 'black';
+      }
+    });
+  });
+  
+  document.addEventListener('mouseup', () => {
+    isDrawing = false;
+  });
+}
+
+
+gridChangeButton.addEventListener('click', () => {
+  let n;
+  while (true) {
+    n = window.prompt('Enter a number for the n x n grid you want:', 16);
+    if (n === null) break;
+    else if (Number.isInteger(+n)) {
+      if (+n > 100) {
+        window.alert('Number cannot be more than 100')
+      }
+      else {
+        gridcontainer.innerHTML = ''; // clear current grid
+        createGrid(n);
+        break;
+      }
+    } 
+  }
 });
