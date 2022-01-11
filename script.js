@@ -1,5 +1,7 @@
 const gridcontainer = document.querySelector('.gridcontainer');
 const gridChangeButton = document.querySelector('.gridsize')
+const clearGridButton = document.querySelector('.cleargrid');
+let cells;
 let isDrawing = false;
 
 createGrid(16);
@@ -14,25 +16,22 @@ function createGrid(n){
     }
   });
 
-  const cells = document.querySelectorAll('.gridcontainer > div > div');
+  cells = document.querySelectorAll('.gridcontainer > div > div');
   cells.forEach(cell => {
     cell.addEventListener('mousedown', e => {
       e.target.style.backgroundColor = 'black';
       isDrawing = true;
     });
-    
     cell.addEventListener('mouseenter', e => {
       if (isDrawing) {
         e.target.style.backgroundColor = 'black';
       }
     });
   });
-  
   document.addEventListener('mouseup', () => {
     isDrawing = false;
   });
 }
-
 
 gridChangeButton.addEventListener('click', () => {
   let n;
@@ -44,10 +43,16 @@ gridChangeButton.addEventListener('click', () => {
         window.alert('Number cannot be more than 100')
       }
       else {
-        gridcontainer.innerHTML = ''; // clear current grid
+        gridcontainer.innerHTML = ''; // remove current grid
         createGrid(n);
         break;
       }
     } 
   }
+});
+
+clearGridButton.addEventListener('click', e => {
+  cells.forEach(cell => {
+    cell.style.removeProperty('background-color');
+  });
 });
