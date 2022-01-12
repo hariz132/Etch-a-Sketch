@@ -3,10 +3,12 @@ const gridChangeButton = document.querySelector('.gridsize')
 const clearGridButton = document.querySelector('.cleargrid');
 const colorPicker = document.querySelector('.colorpicker');
 const eraserButton = document.querySelector('.eraser');
+const rgbButton = document.querySelector('.rgb');
+const darkenButton = document.querySelector('.darken');
 let cells;
 let isDrawing = false;
 let drawingMode = 'color';
-let activeColor = 'black'
+let activeColor = 'black';
 
 createGrid(16);
 
@@ -40,19 +42,18 @@ function startDrawing(e) {
   switch (drawingMode) {
     case 'rgb':
       e.target.style.backgroundColor = randomRGB();
-      const currentCellColor = e.target.style.backgroundColor;
-      console.log(currentCellColor);
       break;
     case 'color':
       e.target.style.backgroundColor = activeColor;
       break;
-    case 'inc-blackness':
+    case 'darken':
       if (e.target.style.filter) {
         let x = +e.target.style.filter.slice(11,-1) - 0.1;
         e.target.style.filter = `brightness(${x})`;
       } else {
         e.target.style.filter = 'brightness(0.9)';
       }
+      break;
     case 'erase':
       e.target.style.removeProperty('background-color');
       e.target.style.removeProperty('filter');
@@ -94,8 +95,11 @@ clearGridButton.addEventListener('click', () => {
 
 colorPicker.addEventListener('input', e => {
   activeColor = e.target.value;
+  drawingMode = 'color';
 });
 
-eraserButton.addEventListener('click', e => {
-  drawingMode = 'erase';
-})
+eraserButton.addEventListener('click', () => drawingMode = 'erase');
+
+rgbButton.addEventListener('click', () => drawingMode = 'rgb');
+
+darkenButton.addEventListener('click', () => drawingMode = 'darken');
