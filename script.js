@@ -1,7 +1,8 @@
 const gridcontainer = document.querySelector('.gridcontainer');
 const gridChangeButton = document.querySelector('.gridsize')
 const clearGridButton = document.querySelector('.cleargrid');
-const colorPicker = document.querySelector('.colorpicker')
+const colorPicker = document.querySelector('.colorpicker');
+const eraserButton = document.querySelector('.eraser');
 let cells;
 let isDrawing = false;
 let drawingMode = 'color';
@@ -52,7 +53,10 @@ function startDrawing(e) {
       } else {
         e.target.style.filter = 'brightness(0.9)';
       }
-  }
+    case 'erase':
+      e.target.style.removeProperty('background-color');
+      e.target.style.removeProperty('filter');
+    }
 }
 
 function randomRGB() {
@@ -91,3 +95,7 @@ clearGridButton.addEventListener('click', () => {
 colorPicker.addEventListener('input', e => {
   activeColor = e.target.value;
 });
+
+eraserButton.addEventListener('click', e => {
+  drawingMode = 'erase';
+})
