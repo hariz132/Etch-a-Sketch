@@ -13,7 +13,7 @@ function createGrid(n){
       rowcontainer.appendChild(document.createElement('div'));
     }
   }
-  dwgEventListener('rgb');
+  dwgEventListener('inc-blackness');
 }
 
 function dwgEventListener(colorMode) {
@@ -23,12 +23,23 @@ function dwgEventListener(colorMode) {
       switch (colorMode) {
         case 'rgb':
           e.target.style.backgroundColor = randomRGB();
+          const currentCellColor = e.target.style.backgroundColor;
+          console.log(currentCellColor);
           break;
         case 'black':
           e.target.style.backgroundColor = 'black';
+          break;
+        case 'inc-blackness':
+          if (e.target.style.filter) {
+            let x = +e.target.style.filter.slice(11,-1) - 0.1;
+            e.target.style.filter = `brightness(${x})`;
+          } else {
+            e.target.style.filter = 'brightness(0.9)';
+          }
       }
       isDrawing = true;
     });
+
     cell.addEventListener('mouseenter', e => {
       if (isDrawing) {
         switch (colorMode) {
@@ -37,6 +48,14 @@ function dwgEventListener(colorMode) {
             break;
           case 'black':
             e.target.style.backgroundColor = 'black';
+            break;
+          case 'inc-blackness':
+            if (e.target.style.filter) {
+              let x = +e.target.style.filter.slice(11,-1) - 0.1;
+              e.target.style.filter = `brightness(${x})`;
+            } else {
+              e.target.style.filter = 'brightness(0.9)';
+            }
         }
       }
     });
@@ -72,8 +91,9 @@ gridChangeButton.addEventListener('click', () => {
   }
 });
 
-clearGridButton.addEventListener('click', e => {
+clearGridButton.addEventListener('click', () => {
   cells.forEach(cell => {
     cell.style.removeProperty('background-color');
+    cell.style.removeProperty('filter');
   });
 });
