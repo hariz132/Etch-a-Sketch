@@ -5,6 +5,7 @@ const colorPicker = document.querySelector('.colorpicker');
 const eraserButton = document.querySelector('.eraser');
 const rgbButton = document.querySelector('.rgb');
 const darkenButton = document.querySelector('.darken');
+const lightenButton = document.querySelector('.lighten');
 let cells;
 let isDrawing = false;
 let drawingMode = 'color';
@@ -42,9 +43,11 @@ function startDrawing(e) {
   switch (drawingMode) {
     case 'rgb':
       e.target.style.backgroundColor = randomRGB();
+      e.target.style.removeProperty('filter');
       break;
     case 'color':
       e.target.style.backgroundColor = activeColor;
+      e.target.style.removeProperty('filter');
       break;
     case 'darken':
       if (e.target.style.filter) {
@@ -52,6 +55,14 @@ function startDrawing(e) {
         e.target.style.filter = `brightness(${x})`;
       } else {
         e.target.style.filter = 'brightness(0.9)';
+      }
+      break;
+    case 'lighten':
+      if (e.target.style.filter) {
+        let x = +e.target.style.filter.slice(11,-1) + 0.1;
+        e.target.style.filter = `brightness(${x})`;
+      } else {
+        e.target.style.filter = 'brightness(1.1)';
       }
       break;
     case 'erase':
@@ -103,3 +114,5 @@ eraserButton.addEventListener('click', () => drawingMode = 'erase');
 rgbButton.addEventListener('click', () => drawingMode = 'rgb');
 
 darkenButton.addEventListener('click', () => drawingMode = 'darken');
+
+lightenButton.addEventListener('click', () => drawingMode = 'lighten');

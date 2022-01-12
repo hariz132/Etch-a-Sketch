@@ -17,7 +17,7 @@
 
 .gridcontainer > div > div{
   flex: 1;
-  background-color: whitesmoke;
+  background-color: white;
   box-sizing: border-box;
 }
 
