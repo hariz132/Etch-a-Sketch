@@ -42,12 +42,12 @@ function setupDrawingEventHandlers() {
 function startDrawing(e) {
   switch (drawingMode) {
     case 'rgb':
+      e.target.removeAttribute('style');
       e.target.style.backgroundColor = randomRGB();
-      e.target.style.removeProperty('filter');
       break;
     case 'color':
+      e.target.removeAttribute('style');
       e.target.style.backgroundColor = activeColor;
-      e.target.style.removeProperty('filter');
       break;
     case 'darken':
       if (e.target.style.filter) {
@@ -66,8 +66,7 @@ function startDrawing(e) {
       }
       break;
     case 'erase':
-      e.target.style.removeProperty('background-color');
-      e.target.style.removeProperty('filter');
+      e.target.removeAttribute('style');
     }
 }
 
@@ -98,10 +97,7 @@ gridChangeButton.addEventListener('click', () => {
 });
 
 clearGridButton.addEventListener('click', () => {
-  cells.forEach(cell => {
-    cell.style.removeProperty('background-color');
-    cell.style.removeProperty('filter');
-  });
+  cells.forEach(cell => cell.removeAttribute('style'));
 });
 
 colorPicker.addEventListener('input', e => {
