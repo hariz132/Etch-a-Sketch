@@ -3,6 +3,8 @@ const gridChangeButton = document.querySelector('.gridsize')
 const clearGridButton = document.querySelector('.cleargrid');
 let cells;
 let isDrawing = false;
+let drawingMode = 'color';
+let activeColor = 'black'
 
 createGrid(16);
 
@@ -13,56 +15,43 @@ function createGrid(n){
       rowcontainer.appendChild(document.createElement('div'));
     }
   }
-  dwgEventListener('inc-blackness');
+  setupDrawingEventHandlers('color');
 }
 
-function dwgEventListener(colorMode) {
+function setupDrawingEventHandlers() {
   cells = document.querySelectorAll('.gridcontainer > div > div');
   cells.forEach(cell => {
     cell.addEventListener('mousedown', e => {
-      switch (colorMode) {
-        case 'rgb':
-          e.target.style.backgroundColor = randomRGB();
-          const currentCellColor = e.target.style.backgroundColor;
-          console.log(currentCellColor);
-          break;
-        case 'black':
-          e.target.style.backgroundColor = 'black';
-          break;
-        case 'inc-blackness':
-          if (e.target.style.filter) {
-            let x = +e.target.style.filter.slice(11,-1) - 0.1;
-            e.target.style.filter = `brightness(${x})`;
-          } else {
-            e.target.style.filter = 'brightness(0.9)';
-          }
-      }
+      startDrawing(e);
       isDrawing = true;
     });
-
     cell.addEventListener('mouseenter', e => {
-      if (isDrawing) {
-        switch (colorMode) {
-          case 'rgb':
-            e.target.style.backgroundColor = randomRGB();
-            break;
-          case 'black':
-            e.target.style.backgroundColor = 'black';
-            break;
-          case 'inc-blackness':
-            if (e.target.style.filter) {
-              let x = +e.target.style.filter.slice(11,-1) - 0.1;
-              e.target.style.filter = `brightness(${x})`;
-            } else {
-              e.target.style.filter = 'brightness(0.9)';
-            }
-        }
-      }
+      if (isDrawing) startDrawing(e);
     });
   });
   document.addEventListener('mouseup', () => {
     isDrawing = false;
   });
+}
+
+function startDrawing(e) {
+  switch (drawingMode) {
+    case 'rgb':
+      e.target.style.backgroundColor = randomRGB();
+      const currentCellColor = e.target.style.backgroundColor;
+      console.log(currentCellColor);
+      break;
+    case 'color':
+      e.target.style.backgroundColor = activeColor;
+      break;
+    case 'inc-blackness':
+      if (e.target.style.filter) {
+        let x = +e.target.style.filter.slice(11,-1) - 0.1;
+        e.target.style.filter = `brightness(${x})`;
+      } else {
+        e.target.style.filter = 'brightness(0.9)';
+      }
+  }
 }
 
 function randomRGB() {
