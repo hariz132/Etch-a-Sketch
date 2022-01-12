@@ -97,7 +97,9 @@ gridChangeButton.addEventListener('click', () => {
 });
 
 clearGridButton.addEventListener('click', () => {
-  cells.forEach(cell => cell.removeAttribute('style'));
+  if (window.confirm('Clear current sketch?')) {
+    cells.forEach(cell => cell.removeAttribute('style'));
+  }
 });
 
 colorPicker.addEventListener('input', e => {
