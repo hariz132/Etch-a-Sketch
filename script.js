@@ -1,6 +1,7 @@
 const gridcontainer = document.querySelector('.gridcontainer');
 const gridChangeButton = document.querySelector('.gridsize')
 const clearGridButton = document.querySelector('.cleargrid');
+const colorPicker = document.querySelector('.colorpicker')
 let cells;
 let isDrawing = false;
 let drawingMode = 'color';
@@ -85,4 +86,8 @@ clearGridButton.addEventListener('click', () => {
     cell.style.removeProperty('background-color');
     cell.style.removeProperty('filter');
   });
+});
+
+colorPicker.addEventListener('input', e => {
+  activeColor = e.target.value;
 });
