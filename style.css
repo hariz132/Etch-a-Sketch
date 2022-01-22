@@ -1,8 +1,8 @@
 body {
-  background-color: whitesmoke;
   height: 100vh;
   display: flex;
   background-color: lightskyblue;
+font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .gridcontainer {
@@ -79,14 +79,8 @@ button, input {
   -moz-appearance: none;
 }
 
-button:hover,
-button:focus {
+button:hover {
   background: #0053ba;
-}
-
-button:focus {
-  outline: 1px solid #fff;
-  outline-offset: -4px;
 }
 
 button:active {
@@ -98,4 +92,10 @@ input {
   width: auto;
   height: 48.5px;
   border: 2px solid black;
+}
+
+.buttonhighlight {
+  background: #0053ba;
+  transform: scale(0.99);
+  box-shadow: inset 0 0 10px black;
 }

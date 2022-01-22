@@ -6,10 +6,12 @@ const eraserButton = document.querySelector('.eraser');
 const rgbButton = document.querySelector('.rgb');
 const darkenButton = document.querySelector('.darken');
 const lightenButton = document.querySelector('.lighten');
+const buttons = document.querySelectorAll('.buttons > *');
 let cells;
 let isDrawing = false;
 let drawingMode = 'color';
-let activeColor = 'black';
+colorPicker.value = '#000000'; // reset colorpicker value to black after a page refresh
+let activeColor = colorPicker.value;
 
 createGrid(16);
 
@@ -78,6 +80,13 @@ function randomNum(num) {
   return Math.floor(Math.random() * num);
 }
 
+function highlightButton(e) {
+  for (const button of buttons) {
+    button.classList.remove('buttonhighlight');
+  }
+  e.target.classList.add('buttonhighlight');
+}
+
 gridChangeButton.addEventListener('click', () => {
   let n;
   while (true) {
@@ -105,12 +114,31 @@ clearGridButton.addEventListener('click', () => {
 colorPicker.addEventListener('input', e => {
   activeColor = e.target.value;
   drawingMode = 'color';
+  highlightButton(e);
 });
 
-eraserButton.addEventListener('click', () => drawingMode = 'erase');
+colorPicker.addEventListener('click', e => {
+  activeColor = e.target.value;
+  drawingMode = 'color';
+  highlightButton(e);
+});
 
-rgbButton.addEventListener('click', () => drawingMode = 'rgb');
+eraserButton.addEventListener('click', e => {
+  drawingMode = 'erase';
+  highlightButton(e);
+});
 
-darkenButton.addEventListener('click', () => drawingMode = 'darken');
+rgbButton.addEventListener('click', e => {
+  drawingMode = 'rgb';
+  highlightButton(e);
+});
 
-lightenButton.addEventListener('click', () => drawingMode = 'lighten');
+darkenButton.addEventListener('click', e => {
+  drawingMode = 'darken';
+  highlightButton(e);
+});
+
+lightenButton.addEventListener('click', e => {
+  drawingMode = 'lighten';
+  highlightButton(e);
+});
