@@ -1,12 +1,9 @@
 const gridcontainer = document.querySelector('.gridcontainer');
-const gridChangeButton = document.querySelector('.gridsize')
-const clearGridButton = document.querySelector('.cleargrid');
-const colorPicker = document.querySelector('.colorpicker');
-const eraserButton = document.querySelector('.eraser');
-const rgbButton = document.querySelector('.rgb');
-const darkenButton = document.querySelector('.darken');
-const lightenButton = document.querySelector('.lighten');
+const gridChangeButton = document.querySelector('#gridsize')
+const clearGridButton = document.querySelector('#cleargrid');
+const colorPicker = document.querySelector('#color');
 const buttons = document.querySelectorAll('.buttons > *');
+const drawingmodeButtons = document.querySelectorAll('.drawingmode');
 let cells;
 let isDrawing = false;
 let drawingMode = 'color';
@@ -22,7 +19,7 @@ function createGrid(n){
       rowcontainer.appendChild(document.createElement('div'));
     }
   }
-  setupDrawingEventHandlers('color');
+  setupDrawingEventHandlers();
 }
 
 function setupDrawingEventHandlers() {
@@ -117,28 +114,9 @@ colorPicker.addEventListener('input', e => {
   highlightButton(e);
 });
 
-colorPicker.addEventListener('click', e => {
-  activeColor = e.target.value;
-  drawingMode = 'color';
-  highlightButton(e);
-});
-
-eraserButton.addEventListener('click', e => {
-  drawingMode = 'erase';
-  highlightButton(e);
-});
-
-rgbButton.addEventListener('click', e => {
-  drawingMode = 'rgb';
-  highlightButton(e);
-});
-
-darkenButton.addEventListener('click', e => {
-  drawingMode = 'darken';
-  highlightButton(e);
-});
-
-lightenButton.addEventListener('click', e => {
-  drawingMode = 'lighten';
-  highlightButton(e);
-});
+for (const button of drawingmodeButtons) {
+  button.addEventListener('click', e => {
+    drawingMode = button.id;
+    highlightButton(e);
+  });
+}
