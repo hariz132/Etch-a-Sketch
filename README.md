@@ -6,7 +6,7 @@ https://www.theodinproject.com/paths/foundations/courses/foundations/lessons/etc
 
 
 Feature wish-list:
--Grid lines on/off toggle button.
--Slider to change grid size.
--Color save slots, preferably 2.
--Undo/Redo button.
+- Grid lines on/off toggle button.
+- Slider to change grid size.
+- Color save slots, preferably 2.
+- Undo/Redo button.
